@@ -7,12 +7,15 @@ kvmctl
 -------
 
 * 安装KVM
+* 设置桥接网卡
+
+
+KVM install:
 
     yum -y install kvm qemu-kvm bridge-utils tunctl
     modprobe kvm ||　modprobe kvm-intel
     /sbin/lsmod | grep kvm
 
-* 设置桥接网卡
 
 /etc/sysconfig/network-scripts/ifcfg-eth0
     
