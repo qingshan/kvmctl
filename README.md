@@ -7,10 +7,39 @@ kvmctl
 -------
 
 * 安装KVM
+
+    yum -y install kvm qemu-kvm bridge-utils tunctl
+    modprobe kvm ||　modprobe kvm-intel
+    /sbin/lsmod | grep kvm
+
 * 设置桥接网卡
 
-安装
----
+/etc/sysconfig/network-scripts/ifcfg-eth0
+    
+    DEVICE=eth0
+    ONBOOT=yes
+    BRIDGE=br0
+    NM_CONTROLLED=no
+
+
+/etc/sysconfig/network-scripts/ifcfg-br0
+
+    DEVICE=br0
+    TYPE=Bridge
+    IPADDR=192.168.1.11
+    NETMASK=255.255.255.0
+    ONBOOT=yes
+    NM_CONTROLLED=no
+
+/etc/sysctl.conf
+
+    net.bridge.bridge-nf-call-ip6tables = 0
+    net.bridge.bridge-nf-call-iptables = 0
+    net.bridge.bridge-nf-call-arptables = 0
+
+
+安装KVM控制脚本
+---------------
 
     cp kvmctl.sh /usr/local/bin/kvmctl
     cp qemu-ifup.sh /etc/qemu-ifup
